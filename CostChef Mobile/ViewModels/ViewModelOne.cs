@@ -10,7 +10,9 @@ namespace CostChef_Mobile.ViewModels
     internal partial class ViewModelOne : ObservableObject
     {
         ModelOne model = new ModelOne();
-        public string Name { get; set; }
+
+        [ObservableProperty]
+        public string name { get; set; }
         public double Price { get; set; }
         public double UsedAmount { get; set; }
         public double PackageSize { get; set; }
