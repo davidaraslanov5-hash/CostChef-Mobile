@@ -70,7 +70,8 @@ namespace CostChef_Mobile.ViewModels
 
                 Cost = ingredient.Cost;
                 Ingredients.Add(ingredient);
-                TotalCost += ingredient.Cost;
+
+                TotalCost = Ingredients.Sum(i => i.Cost);
 
                 Name = string.Empty;
                 Price = null;

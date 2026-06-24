@@ -48,7 +48,9 @@
                 HorizontalOptions="Fill" />
 
             <Label 
-                Text="{Binding TotalCost, StringFormat='Итоговая цена: {0:0.00} рублей'}"
+                HorizontalOptions="Center"
+                TextColor="{Binding TextColor}"
+                Text="{Binding TotalCost, StringFormat='Итоговая цена: {0:0.00} ₽'}"
                 ></Label>
             <CollectionView ItemsSource="{Binding Ingredients}" BackgroundColor="{Binding InteractColor}"  WidthRequest="320">
                 <CollectionView.ItemTemplate>
@@ -58,18 +60,21 @@
                               Padding="10"
                               StrokeThickness="1">
                             <HorizontalStackLayout>
-                                <Label Text="{Binding Name}"     
+                                <Label Text="{Binding Name}"  
+                                 TextColor="{Binding TextColor}"
                                  Padding="10"
                                  FontSize="15"
                                  FontAttributes="Bold"
                                  HorizontalOptions="Start"
                                  />
                                 <Label Text="{Binding UsedAmount}"
+                                 TextColor="{Binding TextColor}"
                                  Padding="10"
                                  FontSize="15"
                                  HorizontalOptions="Start"/>
 
-                                <Label Text="{Binding Cost, StringFormat='Цена: {0:0.00} рублей'}"
+                                <Label Text="{Binding Cost, StringFormat='Цена: {0:0.00} ₽'}"
+                                 TextColor="{Binding TextColor}"
                                  Padding="10"
                                  FontSize="15"
                                  HorizontalOptions="Start"/>
