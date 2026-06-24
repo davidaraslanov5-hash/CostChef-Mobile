@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows.Input;
 
 namespace CostChef_Mobile.ViewModels
 {
@@ -13,13 +14,13 @@ namespace CostChef_Mobile.ViewModels
         ModelOne model = new ModelOne();
 
         [ObservableProperty]
-        public Color interactColor = Colors.BlanchedAlmond;
+        public Color interactColor = Colors.Pink;
         [ObservableProperty] 
         public Color color = Colors.MintCream;
         [ObservableProperty]
         public Color textColor = Colors.Black;
         [ObservableProperty]
-        public Color backgroundColor = Colors.LavenderBlush;
+        public Color backgroundColor = Colors.LightPink;
 
         [ObservableProperty]
         private string name = string.Empty;
@@ -33,9 +34,20 @@ namespace CostChef_Mobile.ViewModels
         public double? cost;
 
         [ObservableProperty]
+        public double? totalCost;
+
+        [ObservableProperty]
         ObservableCollection<ModelOne.Ingredient> ingredients = new ObservableCollection<ModelOne.Ingredient>();
 
-        public Command<ModelOne.Ingredient> DeleteCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+
+        private void DeleteIngredient(ModelOne.Ingredient ingredient)
+        {
+            if (Ingredients.Contains(ingredient))
+            {
+                Ingredients.Remove(ingredient);
+            }
+        }
 
         [RelayCommand]
         public void CalculateCost()
@@ -53,8 +65,12 @@ namespace CostChef_Mobile.ViewModels
                     UsedAmount = UsedAmount,
                     PackageSize = PackageSize
                 };
+
+                DeleteCommand = new RelayCommand<ModelOne.Ingredient>(DeleteIngredient);
+
                 Cost = ingredient.Cost;
                 Ingredients.Add(ingredient);
+                TotalCost += ingredient.Cost;
 
                 Name = string.Empty;
                 Price = null;
