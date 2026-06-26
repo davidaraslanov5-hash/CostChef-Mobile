@@ -6,16 +6,14 @@ namespace CostChef_Mobile.Models
 {
     internal class ModelOne
     {
-
+        public List<Ingredient> ingredients = new List<Ingredient>();
         public class Ingredient
         {
             public string Name { get; set; }
-            public double Price { get; set; }
-            public double UsedAmount { get; set; }
-            public double PackageSize { get; set; }
-
-            public double Cost => Price / PackageSize * UsedAmount;
+            public double? Price { get; set; }
+            public double? UsedAmount { get; set; }
+            public double? PackageSize { get; set; }
+            public double Cost => Price / PackageSize * UsedAmount ?? 0;
         }
-
     }
 }
