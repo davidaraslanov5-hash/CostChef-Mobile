@@ -47,13 +47,20 @@
                 Command="{Binding CalculateCostCommand}"
                 HorizontalOptions="Fill" />
 
-            <Label 
+            <Frame
                 IsVisible="{Binding IsVisibleTotalCost}"
-                HorizontalOptions="Center"
-                TextColor="{Binding TextColor}"
-                Text="{Binding TotalCost, StringFormat='Итоговая цена: {0:0.00} ₽'}"
-                ></Label>
-            <CollectionView ItemsSource="{Binding Ingredients}" BackgroundColor="{Binding InteractColor}"  WidthRequest="320">
+                BackgroundColor="{Binding InteractColor}"
+                Padding="10"
+                CornerRadius="10"
+                HorizontalOptions="Center">
+                <Label 
+                    TextColor="{Binding TextColor}"
+                    Text="{Binding TotalCost, StringFormat='Итоговая цена: {0:0.00} ₽'}"
+                    FontSize="15"
+                    FontAttributes="Italic"
+                    HorizontalOptions="Center" />
+            </Frame>
+            <CollectionView ItemsSource="{Binding Ingredients}" BackgroundColor="{Binding InteractColor}"  WidthRequest="400">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border
@@ -72,13 +79,13 @@
                                  TextColor="{Binding TextColor}"
                                  Padding="10"
                                  FontSize="15"
-                                 HorizontalOptions="Start"/>
+                                 HorizontalOptions="Center"/>
 
                                 <Label Text="{Binding Cost, StringFormat='Цена: {0:0.00} ₽'}"
                                  TextColor="{Binding TextColor}"
                                  Padding="10"
                                  FontSize="15"
-                                 HorizontalOptions="Start"/>
+                                 HorizontalOptions="Center"/>
                                 
                                 <Button Text="Удалить"
                                         BackgroundColor="Red"
