@@ -37,6 +37,9 @@ namespace CostChef_Mobile.ViewModels
         public double? totalCost;
 
         [ObservableProperty]
+        public bool isVisibleTotalCost = false;
+
+        [ObservableProperty]
         ObservableCollection<ModelOne.Ingredient> ingredients = new ObservableCollection<ModelOne.Ingredient>();
 
         public ICommand DeleteCommand { get; set; }
@@ -47,6 +50,7 @@ namespace CostChef_Mobile.ViewModels
             {
                 Ingredients.Remove(ingredient);
             }
+            VisibleTotalCost();
         }
 
         [RelayCommand]
@@ -72,6 +76,7 @@ namespace CostChef_Mobile.ViewModels
                 Ingredients.Add(ingredient);
 
                 TotalCost = Ingredients.Sum(i => i.Cost);
+                VisibleTotalCost();
 
                 Name = string.Empty;
                 Price = null;
@@ -80,5 +85,18 @@ namespace CostChef_Mobile.ViewModels
             }
         }
 
+
+        public void VisibleTotalCost()
+        {
+            TotalCost = Ingredients.Sum(i => i.Cost);
+            if (Ingredients.Count > 0)
+            {
+                IsVisibleTotalCost = true;
+            }
+            else
+            {
+                IsVisibleTotalCost = false;
+            }
+        }
     }
 }

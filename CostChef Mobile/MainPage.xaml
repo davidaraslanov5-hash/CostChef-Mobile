@@ -48,6 +48,7 @@
                 HorizontalOptions="Fill" />
 
             <Label 
+                IsVisible="{Binding IsVisibleTotalCost}"
                 HorizontalOptions="Center"
                 TextColor="{Binding TextColor}"
                 Text="{Binding TotalCost, StringFormat='Итоговая цена: {0:0.00} ₽'}"
