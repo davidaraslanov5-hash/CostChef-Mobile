@@ -14,13 +14,15 @@ namespace CostChef_Mobile.ViewModels
         ModelOne model = new ModelOne();
 
         [ObservableProperty]
-        public Color interactColor = Colors.Pink;
-        [ObservableProperty] 
-        public Color color = Colors.MintCream;
+        public Color bcgColor = Color.FromArgb("#E1DDD0");
+        [ObservableProperty]
+        public Color inputColor = Color.FromArgb("#F1EDDC");
+        [ObservableProperty]
+        public Color buttonColor = Color.FromArgb("#936B61");
+        [ObservableProperty]
+        public Color listColor = Color.FromArgb("#EBEBEB");
         [ObservableProperty]
         public Color textColor = Colors.Black;
-        [ObservableProperty]
-        public Color backgroundColor = Colors.LightPink;
 
         [ObservableProperty]
         private string name = string.Empty;
@@ -56,18 +58,18 @@ namespace CostChef_Mobile.ViewModels
         [RelayCommand]
         public void CalculateCost()
         {
-            if (Name == string.Empty ||
-                Price == null ||
-                UsedAmount == null ||
-                PackageSize == null) ;
-            else
-            {
+            //if (Name == string.Empty ||
+            //   Price == null ||
+            //    UsedAmount == null ||
+            //    PackageSize == null) ;
+            //else
+            //{
                 var ingredient = new ModelOne.Ingredient
                 {
-                    Name = Name,
-                    Price = Price,
-                    UsedAmount = UsedAmount,
-                    PackageSize = PackageSize
+                    Name = "Мука",
+                    Price = 500,
+                    UsedAmount = 340,
+                    PackageSize = 1000
                 };
 
                 DeleteCommand = new RelayCommand<ModelOne.Ingredient>(DeleteIngredient);
@@ -82,7 +84,7 @@ namespace CostChef_Mobile.ViewModels
                 Price = null;
                 UsedAmount = null;
                 PackageSize = null;
-            }
+            //}
         }
 
 
