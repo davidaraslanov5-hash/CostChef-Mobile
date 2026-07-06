@@ -57,12 +57,25 @@
                 Padding="10"
                 CornerRadius="10"
                 HorizontalOptions="Center">
-                <Label 
-                    TextColor="{Binding TextColor}"
-                    Text="{Binding TotalCost, StringFormat='Итоговая цена: {0:0.00} ₽'}"
-                    FontSize="15"
-                    FontAttributes="Italic"
-                    HorizontalOptions="Center" />
+                <HorizontalStackLayout>
+                    <Label 
+                        TextColor="{Binding TextColor}"
+                        Text="{Binding TotalCost, StringFormat='Итоговая цена: {0:0.00} ₽  '}"
+                        FontSize="15"
+                        FontAttributes="Italic"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"/>
+                    
+                    <Button
+                        Margin="4"
+                        Text="Сохранить"
+                        Command="{Binding SaveIngredientsCommand}"
+                        BackgroundColor="#936B61"
+                        TextColor="White"
+                        FontSize="14"
+                        HorizontalOptions="End" />
+                </HorizontalStackLayout>
+
             </Frame>
             <CollectionView ItemsSource="{Binding Ingredients}" BackgroundColor="{Binding ListColor}" WidthRequest="360">
                 <CollectionView.ItemTemplate>

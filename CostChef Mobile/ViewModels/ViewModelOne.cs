@@ -41,6 +41,8 @@ namespace CostChef_Mobile.ViewModels
         [ObservableProperty]
         public bool isVisibleTotalCost = false;
 
+        ObservableCollection<Ingredients> Recipe = new ObservableCollection<Ingredients>();
+
         [ObservableProperty]
         ObservableCollection<ModelOne.Ingredient> ingredients = new ObservableCollection<ModelOne.Ingredient>();
 
@@ -71,9 +73,9 @@ namespace CostChef_Mobile.ViewModels
                     UsedAmount = 340,
                     PackageSize = 1000
                 };
-
+                
                 DeleteCommand = new RelayCommand<ModelOne.Ingredient>(DeleteIngredient);
-
+                
                 Cost = ingredient.Cost;
                 Ingredients.Add(ingredient);
 
@@ -84,9 +86,7 @@ namespace CostChef_Mobile.ViewModels
                 Price = null;
                 UsedAmount = null;
                 PackageSize = null;
-            //}
         }
-
 
         public void VisibleTotalCost()
         {
@@ -99,6 +99,20 @@ namespace CostChef_Mobile.ViewModels
             {
                 IsVisibleTotalCost = false;
             }
+        }
+
+        [RelayCommand]
+        public void SaveIngredients()
+        {
+            SimpleStorage.SaveData("Рецепт", Ingredients);
+            //Ingredients.Clear();
+            //VisibleTotalCost();
+        }
+
+        [RelayCommand]
+        public void loadIngredients()
+        {
+            var loadedIngredients = SimpleStorage.LoadData<ObservableCollection<ModelOne.Ingredient>>("Рецепт");
         }
     }
 }

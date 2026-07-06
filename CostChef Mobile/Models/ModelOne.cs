@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CostChef_Mobile.Models
 {
-    internal class ModelOne
+    public class ModelOne
     {
         public List<Ingredient> ingredients = new List<Ingredient>();
         public class Ingredient

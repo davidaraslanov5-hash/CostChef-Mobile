@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CostChef_Mobile.Ingredients"
+             Title="Ingredients">
+    <VerticalStackLayout>
+        <CollectionView Grid.Row="0" ItemsSource="{Binding SavedIngredients}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border StrokeShape="RoundRectangle 8"
+                            Padding="10"
+                            Margin="0,0,0,10">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Name}" />
+                            <Label Text="{Binding UsedAmount}" />
+                            <Label Text="{Binding Price}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <HorizontalStackLayout>
+            <Button Text="Add Ingredient"
+                Clicked="Button_Clicked"
+                HorizontalOptions="Center" />
+            <Button Text="Delete all"
+                Clicked="DeleteAll_Clicked"
+                HorizontalOptions="Center" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
