@@ -4,6 +4,7 @@ using CostChef_Mobile.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
@@ -41,11 +42,10 @@ namespace CostChef_Mobile.ViewModels
         [ObservableProperty]
         public bool isVisibleTotalCost = false;
 
-        ObservableCollection<Ingredients> Recipe = new ObservableCollection<Ingredients>();
-
         [ObservableProperty]
         ObservableCollection<ModelOne.Ingredient> ingredients = new ObservableCollection<ModelOne.Ingredient>();
 
+        public List<ModelOne.Ingredient> _SavedIngredients { get; set; } = new List<ModelOne.Ingredient>();
         public ICommand DeleteCommand { get; set; }
 
         private void DeleteIngredient(ModelOne.Ingredient ingredient)
@@ -60,22 +60,22 @@ namespace CostChef_Mobile.ViewModels
         [RelayCommand]
         public void CalculateCost()
         {
-            //if (Name == string.Empty ||
-            //   Price == null ||
-            //    UsedAmount == null ||
-            //    PackageSize == null) ;
-            //else
-            //{
+            if (Name == string.Empty ||
+               Price == null ||
+                UsedAmount == null ||
+                PackageSize == null) ;
+            else
+            {
                 var ingredient = new ModelOne.Ingredient
                 {
-                    Name = "Мука",
-                    Price = 500,
-                    UsedAmount = 340,
-                    PackageSize = 1000
+                    Name = Name,
+                    Price = Price,
+                    UsedAmount = UsedAmount,
+                    PackageSize = PackageSize
                 };
-                
+
                 DeleteCommand = new RelayCommand<ModelOne.Ingredient>(DeleteIngredient);
-                
+
                 Cost = ingredient.Cost;
                 Ingredients.Add(ingredient);
 
@@ -86,6 +86,7 @@ namespace CostChef_Mobile.ViewModels
                 Price = null;
                 UsedAmount = null;
                 PackageSize = null;
+            }
         }
 
         public void VisibleTotalCost()
@@ -104,9 +105,10 @@ namespace CostChef_Mobile.ViewModels
         [RelayCommand]
         public void SaveIngredients()
         {
-            SimpleStorage.SaveData("Рецепт", Ingredients);
-            //Ingredients.Clear();
-            //VisibleTotalCost();
+            _SavedIngredients = Ingredients.ToList();
+            Ingredients.Clear();
+            SimpleStorage.SaveData("Рецепт", _SavedIngredients);
+            // Если страница Ingredients находится в NavigationStack, обновляем её коллекцию
         }
 
         [RelayCommand]

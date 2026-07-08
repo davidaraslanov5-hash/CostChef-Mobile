@@ -4,6 +4,9 @@ namespace CostChef_Mobile;
 
 public partial class Ingredients : ContentPage
 {
+    // Используем экземпляр ViewModel, а не обращаемся к нестатическому члену как к статическому
+    private readonly ViewModels.ViewModelOne _viewModel = new ViewModels.ViewModelOne();
+
     public Ingredients()
 	{
 		InitializeComponent();
@@ -17,7 +20,7 @@ public partial class Ingredients : ContentPage
     {
         base.OnAppearing();
 
-        var loadedList = SimpleStorage.LoadData<ObservableCollection<Models.ModelOne.Ingredient>>("SavedItems")
+        var loadedList = SimpleStorage.LoadData<ObservableCollection<Models.ModelOne.Ingredient>>("Рецепт")
                     ?? new ObservableCollection<Models.ModelOne.Ingredient>();
 
         SavedIngredients.Clear();
@@ -33,18 +36,26 @@ public partial class Ingredients : ContentPage
         var newObj = new Models.ModelOne.Ingredient
         {
             Name = "тест",
-            Price = 150,
-            UsedAmount = 40,
-            PackageSize = 140,
+            UsedAmount = 100,
+            Price = 20,
         };
-        SavedIngredients.Add(newObj);
 
+        SavedIngredients.Add(newObj);
+        
         SimpleStorage.SaveData("SavedItems", SavedIngredients);
     }
-
+        
     private void DeleteAll_Clicked(object sender, EventArgs e)
     {
         SavedIngredients.Clear();
         SimpleStorage.SaveData("SavedItems", SavedIngredients);
+    }
+         
+    public void CopyList()
+    {
+        foreach (var item in _viewModel._SavedIngredients)
+        {
+            SavedIngredients.Add(item);
+        }
     }
 }
