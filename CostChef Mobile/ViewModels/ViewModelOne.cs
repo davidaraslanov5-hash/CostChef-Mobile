@@ -23,8 +23,8 @@ namespace CostChef_Mobile.ViewModels
         [ObservableProperty]
         public Color listColor = Color.FromArgb("#EBEBEB");
         [ObservableProperty]
-        public Color textColor = Colors.Black;
-
+        public Color textColor = Microsoft.Maui.Graphics.Colors.Black;
+        
         [ObservableProperty]
         private string name = string.Empty;
         [ObservableProperty]
@@ -46,6 +46,8 @@ namespace CostChef_Mobile.ViewModels
         ObservableCollection<ModelOne.Ingredient> ingredients = new ObservableCollection<ModelOne.Ingredient>();
 
         public List<ModelOne.Ingredient> _SavedIngredients { get; set; } = new List<ModelOne.Ingredient>();
+
+        public List<ModelOne.Recipe> ListSavedReciepts { get; set; } = new List<ModelOne.Recipe>();
         public ICommand DeleteCommand { get; set; }
 
         private void DeleteIngredient(ModelOne.Ingredient ingredient)
@@ -102,12 +104,23 @@ namespace CostChef_Mobile.ViewModels
             }
         }
 
+        public string NameFile = string.Empty;
+
         [RelayCommand]
         public void SaveIngredients()
         {
             _SavedIngredients = Ingredients.ToList();
+
+            var reciept = new ModelOne.Recipe
+            {
+                Name = NameFile,
+                Ingredients = _SavedIngredients
+            };
+
             Ingredients.Clear();
-            SimpleStorage.SaveData("Рецепт", _SavedIngredients);
+            VisibleTotalCost();
+            ListSavedReciepts.Add(reciept);
+            SimpleStorage.SaveData("SavedItems", ListSavedReciepts);
             // Если страница Ingredients находится в NavigationStack, обновляем её коллекцию
         }
 

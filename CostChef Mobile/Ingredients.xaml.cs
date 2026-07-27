@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using CostChef_Mobile.ViewModels;
 using System.Collections.ObjectModel;
 
 namespace CostChef_Mobile;
@@ -10,52 +12,49 @@ public partial class Ingredients : ContentPage
     public Ingredients()
 	{
 		InitializeComponent();
-
 		BindingContext = this;
-	}
+    }
 
-    public ObservableCollection<Models.ModelOne.Ingredient> SavedIngredients { get; set; } = new();
-
+    public ObservableCollection<Models.ModelOne.Recipe> SavedListRecipes { get; set; } = new();
     protected override void OnAppearing()
     {
         base.OnAppearing();
 
-        var loadedList = SimpleStorage.LoadData<ObservableCollection<Models.ModelOne.Ingredient>>("Рецепт")
-                    ?? new ObservableCollection<Models.ModelOne.Ingredient>();
+        var loadedList = SimpleStorage.LoadData<ObservableCollection<Models.ModelOne.Recipe>>("SavedItems")
+                    ?? new ObservableCollection<Models.ModelOne.Recipe>();
 
-        SavedIngredients.Clear();
+        SavedListRecipes.Clear();
 
         foreach (var item in loadedList)
         {
-            SavedIngredients.Add(item);
+            SavedListRecipes.Add(item);
         }
     }
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-        var newObj = new Models.ModelOne.Ingredient
+        var newObj = new Models.ModelOne.Recipe
         {
             Name = "тест",
-            UsedAmount = 100,
-            Price = 20,
+            Ingredients = _viewModel._SavedIngredients,
         };
 
-        SavedIngredients.Add(newObj);
+        SavedListRecipes.Add(newObj);
         
-        SimpleStorage.SaveData("SavedItems", SavedIngredients);
+        SimpleStorage.SaveData("SavedItems", SavedListRecipes);
     }
         
     private void DeleteAll_Clicked(object sender, EventArgs e)
     {
-        SavedIngredients.Clear();
-        SimpleStorage.SaveData("SavedItems", SavedIngredients);
+        SavedListRecipes.Clear();
+        SimpleStorage.SaveData("SavedItems", SavedListRecipes);
     }
          
     public void CopyList()
     {
-        foreach (var item in _viewModel._SavedIngredients)
+        foreach (var item in _viewModel.ListSavedReciepts)
         {
-            SavedIngredients.Add(item);
+            SavedListRecipes.Add(item);
         }
     }
 }
