@@ -1,21 +1,25 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CostChef_Mobile.ViewModels;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CostChef_Mobile;
 
 public partial class Ingredients : ContentPage
 {
     // Используем экземпляр ViewModel, а не обращаемся к нестатическому члену как к статическому
-    private readonly ViewModels.ViewModelOne _viewModel = new ViewModels.ViewModelOne();
+    //private readonly ViewModels.ViewModelOne _viewModel = new ViewModels.ViewModelOne();
 
     public Ingredients()
 	{
-		InitializeComponent();
+        InitializeComponent();
 		BindingContext = this;
     }
 
     public ObservableCollection<Models.ModelOne.Recipe> SavedListRecipes { get; set; } = new();
+
+    public List<Models.ModelOne.Recipe> _savedRecipe { get; set; } = new();
+
     protected override void OnAppearing()
     {
         base.OnAppearing();
@@ -27,34 +31,15 @@ public partial class Ingredients : ContentPage
 
         foreach (var item in loadedList)
         {
-            SavedListRecipes.Add(item);
+           SavedListRecipes.Add(item);
         }
+
     }
 
-    private void Button_Clicked(object sender, EventArgs e)
-    {
-        var newObj = new Models.ModelOne.Recipe
-        {
-            Name = "тест",
-            Ingredients = _viewModel._SavedIngredients,
-        };
-
-        SavedListRecipes.Add(newObj);
-        
-        SimpleStorage.SaveData("SavedItems", SavedListRecipes);
-    }
-        
     private void DeleteAll_Clicked(object sender, EventArgs e)
     {
         SavedListRecipes.Clear();
-        SimpleStorage.SaveData("SavedItems", SavedListRecipes);
-    }
-         
-    public void CopyList()
-    {
-        foreach (var item in _viewModel.ListSavedReciepts)
-        {
-            SavedListRecipes.Add(item);
-        }
+
+        SimpleStorage.Delete("SavedItems");
     }
 }

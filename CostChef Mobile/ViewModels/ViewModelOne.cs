@@ -47,7 +47,6 @@ namespace CostChef_Mobile.ViewModels
 
         public List<ModelOne.Ingredient> _SavedIngredients { get; set; } = new List<ModelOne.Ingredient>();
 
-        public List<ModelOne.Recipe> ListSavedReciepts { get; set; } = new List<ModelOne.Recipe>();
         public ICommand DeleteCommand { get; set; }
 
         private void DeleteIngredient(ModelOne.Ingredient ingredient)
@@ -107,8 +106,15 @@ namespace CostChef_Mobile.ViewModels
         public string NameFile = string.Empty;
 
         [RelayCommand]
-        public void SaveIngredients()
+        public async Task SaveIngredients()
         {
+            while (NameFile == string.Empty)
+            {
+                await Task.Delay(70);
+            }
+
+            System.Diagnostics.Debug.WriteLine($"---> ИМЯ {NameFile}"); 
+
             _SavedIngredients = Ingredients.ToList();
 
             var reciept = new ModelOne.Recipe
@@ -119,9 +125,16 @@ namespace CostChef_Mobile.ViewModels
 
             Ingredients.Clear();
             VisibleTotalCost();
-            ListSavedReciepts.Add(reciept);
-            SimpleStorage.SaveData("SavedItems", ListSavedReciepts);
-            // Если страница Ingredients находится в NavigationStack, обновляем её коллекцию
+
+            var currentSavedList = SimpleStorage.LoadData<List<ModelOne.Recipe>>("SavedItems") 
+                                    ?? new List<ModelOne.Recipe>();
+
+            currentSavedList.Add(reciept);
+
+            NameFile = string.Empty;
+
+            SimpleStorage.SaveData("SavedItems", currentSavedList);
+
         }
 
         [RelayCommand]
