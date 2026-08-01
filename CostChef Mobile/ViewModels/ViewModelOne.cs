@@ -103,15 +103,17 @@ namespace CostChef_Mobile.ViewModels
             }
         }
 
-        public string NameFile = string.Empty;
+        public TaskCompletionSource<string> _nameSetSignal = new();
 
         [RelayCommand]
         public async Task SaveIngredients()
         {
-            while (NameFile == string.Empty)
+            /*while (NameFile == string.Empty)
             {
                 await Task.Delay(70);
             }
+            */
+            string NameFile = await _nameSetSignal.Task;
 
             System.Diagnostics.Debug.WriteLine($"---> ИМЯ {NameFile}"); 
 
@@ -131,7 +133,7 @@ namespace CostChef_Mobile.ViewModels
 
             currentSavedList.Add(reciept);
 
-            NameFile = string.Empty;
+            _nameSetSignal = new TaskCompletionSource<string>();
 
             SimpleStorage.SaveData("SavedItems", currentSavedList);
 
