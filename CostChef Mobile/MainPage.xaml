@@ -13,7 +13,8 @@
             <Frame BackgroundColor="{Binding InputColor}"
                     Padding="10"
                     CornerRadius="10"
-                    HorizontalOptions="Center">
+                    HorizontalOptions="Center"
+                   MinimumWidthRequest="360">
                 <VerticalStackLayout BackgroundColor="{Binding InputColor}" Padding="12">
                     <Entry
                             TextColor="{Binding TextColor}"
@@ -69,6 +70,7 @@
                     <Button
                         Margin="4"
                         Text="Сохранить"
+                        Clicked="SetNameToSave"
                         Command="{Binding SaveIngredientsCommand}"
                         BackgroundColor="#936B61"
                         TextColor="White"

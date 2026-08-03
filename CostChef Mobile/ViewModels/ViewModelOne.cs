@@ -13,17 +13,30 @@ namespace CostChef_Mobile.ViewModels
     internal partial class ViewModelOne : ObservableObject
     {
         ModelOne model = new ModelOne();
+        ColorsViewModel colors = new ColorsViewModel();
 
         [ObservableProperty]
-        public Color bcgColor = Color.FromArgb("#E1DDD0");
+        public Color bcgColor;
         [ObservableProperty]
-        public Color inputColor = Color.FromArgb("#F1EDDC");
+        public Color inputColor;
         [ObservableProperty]
-        public Color buttonColor = Color.FromArgb("#936B61");
+        public Color buttonColor;
         [ObservableProperty]
-        public Color listColor = Color.FromArgb("#EBEBEB");
+        public Color listColor;
         [ObservableProperty]
         public Color textColor = Microsoft.Maui.Graphics.Colors.Black;
+
+        public ViewModelOne()
+        {
+            Ingredients = new ObservableCollection<ModelOne.Ingredient>();
+            BcgColor = colors.bcgColor;
+            InputColor = colors.inputColor;
+            ButtonColor = colors.buttonColor;
+            ListColor = colors.listColor;
+
+        }
+
+
         
         [ObservableProperty]
         private string name = string.Empty;

@@ -2,18 +2,35 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CostChef_Mobile.Ingredients"
-             Title="Ingredients">
+             Title="Ingredients"
+             BackgroundColor="{Binding BcgColor}">
     <VerticalStackLayout>
-        <CollectionView Grid.Row="0" ItemsSource="{Binding SavedIngredients}">
+        <CollectionView
+            Grid.Row="0" 
+            ItemsSource="{Binding SavedListRecipes}" 
+            BackgroundColor="{Binding ListColor}"
+            WidthRequest="360">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border StrokeShape="RoundRectangle 8"
-                            Padding="10"
+                            Padding="20"
                             Margin="0,0,0,10">
                         <VerticalStackLayout>
-                            <Label Text="{Binding Name}" />
-                            <Label Text="{Binding UsedAmount}" />
-                            <Label Text="{Binding Price}" />
+                            
+                            <Label Text="{Binding Name}" TextColor="Black"/>
+                            <Label Text="{Binding TotalCostRecipe, StringFormat='Общая цена:  {0:F2} ₽'}" TextColor="Black"/>
+
+                            <CollectionView ItemsSource="{Binding Ingredients}">
+                                <CollectionView.ItemTemplate padding="10">
+                                    <DataTemplate>
+                                        <HorizontalStackLayout Padding="1">
+                                            <Label Text="{Binding Name}" TextColor="Black"/>
+                                            <Label Text="{Binding UsedAmount, StringFormat='— использовано : {0:F2} '}" TextColor="Black"/>
+                                            <Label Text="{Binding Cost, StringFormat=' — цена: {0:F2} ₽'}" TextColor="Black"/>
+                                        </HorizontalStackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>
@@ -21,11 +38,8 @@
         </CollectionView>
 
         <HorizontalStackLayout>
-            <Button Text="Add Ingredient"
-                Clicked="Button_Clicked"
-                HorizontalOptions="Center" />
             <Button Text="Delete all"
-                Clicked="DeleteAll_Clicked"
+                Command="{Binding DeleteAllCommand}"
                 HorizontalOptions="Center" />
         </HorizontalStackLayout>
     </VerticalStackLayout>
