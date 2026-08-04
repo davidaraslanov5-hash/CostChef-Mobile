@@ -1,4 +1,6 @@
-﻿namespace CostChef_Mobile
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace CostChef_Mobile
 {
     public partial class MainPage : ContentPage
     {
@@ -14,7 +16,10 @@
 
         private async void SetNameToSave(object sender, EventArgs e)
         {
-            string NameList = await DisplayPromptAsync(
+            string NameList;
+            do 
+            { 
+                NameList = await DisplayPromptAsync(
                 "Сохранить ингредиенты",
                 "Введите имя для списка ингредиентов",
                 accept: "Сохранить",
@@ -24,6 +29,13 @@
                 keyboard: Keyboard.Text
                 );
             //_viewModel.NameFile = NameList;
+            if (NameList == null)
+            {
+                return;
+            }
+
+            } while (string.IsNullOrWhiteSpace(NameList));
+
             _viewModel._nameSetSignal.TrySetResult(NameList);
         }
         
